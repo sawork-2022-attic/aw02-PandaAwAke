@@ -46,3 +46,15 @@ Please use asciinema (https://asciinema.org) to record a demo and submit the url
 
 And please elaborate your understanding in layered systems via this homework in your README.md.
 
+
+
+## 理解
+
+这是一种 Three Layered 方式。
+
+* biz
+  * Business Logic Layer，位于下面两个层次之间，作为用户界面和数据层之间沟通的桥梁。此例中提供“服务”交互。
+* cli
+  * Presentation Layer，用于与用户交互
+* db
+  * Data Access Layer，用于存储和管理数据

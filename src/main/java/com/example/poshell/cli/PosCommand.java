@@ -1,10 +1,13 @@
 package com.example.poshell.cli;
 
 import com.example.poshell.biz.PosService;
+import com.example.poshell.model.Item;
 import com.example.poshell.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+
+import java.util.List;
 
 @ShellComponent
 public class PosCommand {
@@ -38,4 +41,35 @@ public class PosCommand {
         }
         return "ERROR";
     }
+
+
+    @ShellMethod(value = "Print the Cart", key = "pr")
+    public String printCart() {
+        return posService.getCart().toString();
+    }
+
+    @ShellMethod(value = "Clear the Cart", key = "clr")
+    public void clearCart() {
+        posService.getCart().getItems().clear();
+    }
+
+    @ShellMethod(value = "Modify the amount of a product", key = "mf")
+    public String modifyProduct(int index, int amount) {
+        if (amount < 0) {
+            return "ERROR";
+        }
+        List<Item> items = posService.getCart().getItems();
+        if (index < 0 || index >= items.size()) {
+            return "ERROR";
+        }
+        if (amount == 0) {
+            items.remove(index);
+        } else {
+            items.get(index).setAmount(amount);
+        }
+        return posService.getCart().toString();
+    }
+
+
+
 }
